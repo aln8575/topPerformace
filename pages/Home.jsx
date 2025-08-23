@@ -19,7 +19,7 @@ export default function Home() {
       image: "/images/compass.jpg" // substitua pelo caminho correto da imagem
     },
     {
-      id: 3,
+      id: 4,
       brand: "Hyundai",
       model: "Creta N-Line",
       year: 2023,
@@ -38,7 +38,9 @@ export default function Home() {
           <p>Conosco seus sonhos se tornam realidade</p>
           <div style={{ display: 'flex', gap: 12, marginTop: 12 }}>
             <Link to="/inventory" className="btn">Ver estoque</Link>
-            <Link to="/contact" className="btn secondary">Falar no WhatsApp</Link>
+            <a
+              className="btn-whatsapp"
+              href="https://wa.me/558591950861?text=Olá! Tenho interesse." target="_blank" rel="noreferrer">Falar no WhatsApp</a>
           </div>
         </div>
         <img
@@ -50,11 +52,13 @@ export default function Home() {
 
       {/* Seção Carros em Destaque */}
       <section className="highlights container" style={{ marginTop: 60 }}>
-        <h2 style={{ marginBottom: 20 }}>Carros em Destaque</h2>
+        <h2 style={{ marginBottom: 20, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>Carros em Destaque</h2>
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-          gap: '20px'
+          gap: '20px',
+          alignItems: 'center',
+
         }}>
           {featuredCars.map((car) => (
             <div key={car.id} style={{
@@ -71,15 +75,68 @@ export default function Home() {
                 <p>{car.year} - <strong>{car.price}</strong></p>
               </div>
               <div style={{ padding: '15px' }}>
-                <Link to="/inventory" className="btn" style={{ width: '100%', textAlign: 'center' }}>Ver detalhes</Link>
+                <Link to={`/vehicle/${car.id}`} className="btn">Ver detalhes</Link>
               </div>
             </div>
           ))}
         </div>
       </section>
 
-      <section id="localizacao" style={{ padding: "60px 20px", textAlign: "center", backgroundColor: "#111827", color: "#fff" }}>
-        <h2 style={{ fontSize: "2rem", marginBottom: "20px" }}>📍 Nossa Localização</h2>
+      <section className="bg-gray-900 py-16">
+        <div className="max-w-6xl mx-auto px-6">
+          <h2 style={{ marginBottom: 20, display: 'flex', flexDirection: 'column', alignItems: 'center' }}> O que nossos clientes dizem 🚗✨</h2>
+
+          <div className="grid gap-8 md:grid-cols-3">
+            {/* Card 1 */}
+            <div className="bg-gray-800 rounded-2xl p-6 shadow-lg flex flex-col items-center text-center h-full">
+              <img
+                src="https://i.pravatar.cc/150?img=12"
+                alt="Cliente"
+                className="w-24 h-24 rounded-full mb-4 object-cover"
+              />
+              <p className="text-gray-300 mb-4 flex-1">
+                "Comprei meu carro na TopPerformance e fiquei super satisfeito! Atendimento rápido"
+              </p>
+              <h4 className="font-semibold text-white">Mariano Souza</h4>
+              <div className="text-yellow-400 mt-2">⭐⭐⭐⭐⭐</div>
+            </div>
+
+            {/* Card 2 */}
+            <div className="bg-gray-800 rounded-2xl p-6 shadow-lg flex flex-col items-center text-center h-full">
+              <img
+                src="https://i.pravatar.cc/150?img=14"
+                alt="Cliente"
+                className="w-24 h-24 rounded-full mb-4 object-cover"
+              />
+              <p className="text-gray-300 mb-4 flex-1">
+                "Preço justo e qualidade garantida. Recomendo para todos que
+                querem um carro confiável."
+              </p>
+              <h4 className="font-semibold text-white">Carlos Mendes</h4>
+              <div className="text-yellow-400 mt-2">⭐⭐⭐⭐⭐</div>
+            </div>
+
+            {/* Card 3 */}
+            <div className="bg-gray-800 rounded-2xl p-6 shadow-lg flex flex-col items-center text-center h-full">
+              <img
+                src="https://i.pravatar.cc/150?img=16"
+                alt="Cliente"
+                className="w-24 h-24 rounded-full mb-4 object-cover"
+              />
+              <p className="text-gray-300 mb-4 flex-1">
+                "Excelente atendimento! O pessoal me ajudou a escolher o carro
+                ideal para minha família."
+              </p>
+              <h4 className="font-semibold text-white">Ana Beatriz</h4>
+              <div className="text-yellow-400 mt-2">⭐⭐⭐⭐⭐</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <section id="localizacao" style={{ padding: "60px 20px", textAlign: "center", backgroundColor: "#111827", color: "#fff", "margin-top": "60px" }}>
+        <h2 style={{ fontSize: "1.5rem", marginBottom: "20px" }}>📍 Nossa Localização</h2>
         <p style={{ marginBottom: "20px" }}>
           Venha nos visitar em nossa loja física e confira de perto os veículos disponíveis.
         </p>

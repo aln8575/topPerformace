@@ -1,9 +1,30 @@
 export default function Contact(){
   return (
-    <section className="container" style={{maxWidth:720}}>
-      <h2>Contato</h2>
-      <p className="muted">Edite esta página com seus dados reais. O botão abaixo abre o WhatsApp com mensagem pronta.</p>
-      <a className="btn" href="https://wa.me/+558591950861?text=Olá! Tenho interesse." target="_blank" rel="noreferrer">Abrir WhatsApp</a>
+    <section className="contact-section">
+      <div className="contact-container">
+        
+        <h2>Entre em Contato</h2>
+        <p>Fale conosco pelo WhatsApp ou envie sua mensagem. 
+           Nossa equipe está pronta para te atender!</p>
+
+        <div className="contact-actions">
+          <a 
+            className="btn-whatsapp" 
+            href="https://wa.me/558591950861?text=Olá! Tenho interesse." 
+            target="_blank" 
+            rel="noreferrer"
+          >
+            💬 Falar no WhatsApp
+          </a>
+
+          <a 
+            className="btn-email" 
+            href="mailto:contato@suaempresa.com"
+          >
+            📧 Enviar E-mail
+          </a>
+        </div>
+      </div>
     </section>
   )
 }

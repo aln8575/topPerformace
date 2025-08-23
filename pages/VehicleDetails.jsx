@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import vehicles from '../data/vehicles'; // ajuste o caminho se estiver diferente
 
 // ========================================================================
-// --- STYLED COMPONENTS ---
+// --- STYLED COMPONENTS (mantidos iguais ao seu código atual) ---
 // ========================================================================
-
 const PageContainer = styled.div`
   padding: 2rem 4rem;
   min-height: 100vh;
@@ -15,16 +16,15 @@ const PageContainer = styled.div`
   }
 `;
 
-// --- SEÇÃO SUPERIOR (IMAGEM E DETALHES) ---
 const TopSection = styled.div`
   display: flex;
   gap: 2rem;
-  flex-wrap: wrap; /* Permite que os itens quebrem para a linha de baixo em telas pequenas */
+  flex-wrap: wrap;
   margin-bottom: 4rem;
 `;
 
 const ImageContainer = styled.div`
-  flex: 1.5; /* Faz a imagem ocupar um pouco mais de espaço */
+  flex: 1.5;
   min-width: 350px;
 `;
 
@@ -36,14 +36,13 @@ const MainImage = styled.img`
 `;
 
 const DetailsContainer = styled.div`
-  flex: 1; /* Faz os detalhes ocuparem o espaço restante */
+  flex: 1;
   min-width: 320px;
   background-color: #111827;
   padding: 2rem;
   border-radius: 12px;
 `;
 
-// --- OUTROS COMPONENTES DA SEÇÃO SUPERIOR ---
 const BackButton = styled.button`
   background: none; border: none; color: #aeb6c1; font-size: 1rem; cursor: pointer; padding: 0; margin-bottom: 1rem;
   &:hover { color: #fff; text-decoration: underline; }
@@ -63,9 +62,7 @@ const ContactButton = styled.a`
   }
 `;
 
-// --- SEÇÃO DA GALERIA ---
 const GallerySection = styled.section`
-  /* Estilos da galeria permanecem os mesmos */
   margin-top: 2rem; width: 100%;
 `;
 const MainImageWrapper = styled.div`
@@ -97,11 +94,23 @@ const NavButton = styled.button`
 // --- COMPONENTE PRINCIPAL ---
 // ========================================================================
 export default function VehicleDetails() {
-  const galleryImages = [
-    { src: '/images/altis.jpg', description: 'Vista frontal e lateral do veículo' },
-    { src: '/images/motorCorola.jpg', description: 'Motor 1.8 Hybrid com transmissão automática' },
-    { src: '/images/creta.jpg', description: 'Painel e interior do veículo' }
-  ];
+  const { id } = useParams();
+  const vehicle = vehicles.find(v => v.id === id);
+
+  // Caso não encontre o veículo
+  if (!vehicle) {
+    return (
+      <PageContainer>
+        <h2>Veículo não encontrado</h2>
+        <BackButton onClick={() => window.history.back()}>&larr; Voltar</BackButton>
+      </PageContainer>
+    );
+  }
+
+  const galleryImages = vehicle.images?.map(img => ({
+    src: img,
+    description: `${vehicle.brand} ${vehicle.model}`
+  })) || [{ src: vehicle.image, description: `${vehicle.brand} ${vehicle.model}` }];
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -109,30 +118,34 @@ export default function VehicleDetails() {
   const goToNext = () => setCurrentIndex(prev => (prev === galleryImages.length - 1 ? 0 : prev + 1));
   const goToImage = index => setCurrentIndex(index);
 
+   // Mensagem automática
+  const message = `Olá! Tenho interesse no ${vehicle.model}`;
+
+  // Monta o link com encode
+  const whatsappLink = `https://wa.me/${558591950861}?text=${encodeURIComponent(message)}`;
+
   return (
     <PageContainer>
-      {/* --- SEÇÃO SUPERIOR: IMAGEM E DETALHES LADO A LADO --- */}
+      {/* --- SEÇÃO SUPERIOR --- */}
       <TopSection>
-        {/* Coluna da Imagem */}
         <ImageContainer>
-          <MainImage src='/images/altis.jpg' alt="Toyota Corolla Altis Hybrid" />
+          <MainImage src={galleryImages[0].src} alt={`${vehicle.brand} ${vehicle.model}`} />
         </ImageContainer>
-        
-        {/* Coluna dos Detalhes */}
+
         <DetailsContainer>
           <BackButton onClick={() => window.history.back()}>&larr; Voltar</BackButton>
-          <h1>Toyota Corolla Altis Hybrid</h1>
-          <p>2023 • 21.000 Km • Flex • Automático</p>
-          <Price>R$ 175.000,00</Price>
-          <p>Descrição breve do veículo. Personalize este texto para incluir opcionais, revisão, laudo cautelar etc.</p>
+          <h1>{vehicle.brand} {vehicle.model}</h1>
+          <p>{vehicle.year} • {vehicle.km.toLocaleString('pt-BR')} Km • {vehicle.fuel} • {vehicle.transmission}</p>
+          <Price>{vehicle.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</Price>
+          <p>{vehicle.description}</p>
           <ButtonGroup>
-            <ContactButton primary href="https://wa.me/seunumerowhatsapp" target="_blank" rel="noopener noreferrer">WhatsApp</ContactButton>
+            <ContactButton primary href={whatsappLink} target="_blank" rel="noopener noreferrer">WhatsApp</ContactButton>
             <ContactButton href="mailto:contato@exemplo.com">Enviar e-mail</ContactButton>
           </ButtonGroup>
         </DetailsContainer>
       </TopSection>
 
-      {/* --- SEÇÃO DA GALERIA INTERATIVA --- */}
+      {/* --- GALERIA --- */}
       <GallerySection>
         <h2>Galeria de imagens</h2>
         <MainImageWrapper>
@@ -143,7 +156,13 @@ export default function VehicleDetails() {
         <Description>{galleryImages[currentIndex].description}</Description>
         <ThumbnailContainer>
           {galleryImages.map((image, index) => (
-            <Thumbnail key={index} src={image.src} alt={`Miniatura ${index + 1}`} onClick={() => goToImage(index)} active={index === currentIndex} />
+            <Thumbnail
+              key={index}
+              src={image.src}
+              alt={`Miniatura ${index + 1}`}
+              onClick={() => goToImage(index)}
+              active={index === currentIndex}
+            />
           ))}
         </ThumbnailContainer>
       </GallerySection>

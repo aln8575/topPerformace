@@ -8,12 +8,13 @@ const vehicles = [
     fuel: 'Flex',
     transmission: 'Automático',
     price: 175000,
-    image: '/images/altis.jpg',   // pega direto do public/images
+    image: '/images/altis.jpg',
     images: [
       '/images/altis.jpg',
       '/images/motorCorola.jpg',
-      '/images/creta.jpg'
-    ]
+      '/images/internaCorola.jpg'
+    ],
+    description: 'O Corolla Altis Hybrid é referência em eficiência e conforto. Equipado com motorização híbrida que combina desempenho e economia, oferece condução suave com câmbio automático CVT e alta tecnologia embarcada.'
   },
   {
     id: '2',
@@ -27,7 +28,8 @@ const vehicles = [
     image: '/images/compass.jpg',
     images: [
       '/images/compass.jpg'
-    ]
+    ],
+    description: 'O Jeep Compass Longitude entrega sofisticação e robustez, com câmbio automático, motor potente e ótimo pacote tecnológico, ideal para uso urbano e estrada.'
   },
   {
     id: '3',
@@ -41,7 +43,8 @@ const vehicles = [
     image: '/images/mt07.jpg',
     images: [
       '/images/mt07.jpg'
-    ]
+    ],
+    description: 'A Yamaha MT-07 ABS é uma naked versátil, leve e potente, perfeita para quem busca adrenalina e agilidade no dia a dia e viagens curtas.'
   },
   {
     id: '4',
@@ -55,7 +58,8 @@ const vehicles = [
     image: '/images/creta.jpg',
     images: [
       '/images/creta.jpg'
-    ]
+    ],
+    description: 'O Hyundai Creta N-Line combina design esportivo, conforto e tecnologia de ponta, oferecendo segurança e desempenho para toda a família.'
   }
 ]
 
